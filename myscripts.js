@@ -23,29 +23,59 @@ operatorButtons.forEach(button =>{
     button.addEventListener("click", () =>{
         const operating = button.innerText;
         if(operating === "÷"){
-            updateRunningCalculation("/", currentNumber)
+            operator = "/"
         }
-        if(operating === "x"){
-            updateRunningCalculation("*", currentNumber)
+        else if(operating === "x"){
+            operator = "*"
         }
         else{
-            updateRunningCalculation(operating, currentNumber)
+            operator = operating
         }
+        updateRunningCalculation(operator, currentNumber);
+        currentNumber = "";
     });
 });
 
 calculate.addEventListener("click", () =>{
-   const calculationArray = runningDisplay.split(" ");
-   operate(calculationArray[0], calculationArray[1], calculationArray[2]);
+    calculateResult();
 });
+
+function calculateResult(){
+    const calculationArray = runningDisplay.split(" ");
+    firstNumber = calculationArray[0];
+    operator = calculationArray[1];
+    secondNumber = calculationArray[2];
+    const result =operate(firstNumber, operator, secondNumber);
+    updateDisplay(result);
+    runningDisplay.innerText = "";
+}
 
 function updateDisplay(value){
     displayValue.innerText = value;
 }
 
 function updateRunningCalculation(calc, typedNumber){
-    runningDisplay += calc;
-    typedNumber.innerText = runningDisplay;
+    let operatorSymbol;
+    
+    switch (calc) {
+      case "+":
+        operatorSymbol = " + ";
+        break;
+      case "-":
+        operatorSymbol = " - ";
+        break;
+      case "*":
+        operatorSymbol = " × ";
+        break;
+      case "/":
+        operatorSymbol = " ÷ ";
+        break;
+      default:
+        operatorSymbol = "";
+        break;
+    }
+    runningDisplay.innerText += " " + calc + " " + typedNumber;
+    displayValue.innerText = "";
 }
 function isOperator(value) {
     return value === "+" || value === "-" || value === "*" || value === "/";
@@ -56,16 +86,16 @@ function operate(num1,sign,num2){
     num2 = parseFloat(num2);
 
     if (sign === '+'){
-        add(num1, num2);
+        return add(num1, num2);
     }
     else if (sign === '-'){
-        subtract(num1, num2);
+        return subtract(num1, num2);
     }
     else if (sign === '/'){
-        divide(num1, num2);
+        return divide(num1, num2);
     }
     else if (sign === '*'){
-        multiply(num1, num2);
+        return multiply(num1, num2);
     }
 }
 
