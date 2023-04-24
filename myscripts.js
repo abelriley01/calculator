@@ -55,8 +55,9 @@ function updateDisplay(value){
 }
 
 function updateRunningCalculation(calc, typedNumber){
+    console.log("runningDisplay: " + runningDisplay.innerText);
     let operatorSymbol;
-    
+
     switch (calc) {
       case "+":
         operatorSymbol = " + ";
@@ -74,7 +75,7 @@ function updateRunningCalculation(calc, typedNumber){
         operatorSymbol = "";
         break;
     }
-    runningDisplay.innerText += " " + calc + " " + typedNumber;
+    runningDisplay.innerText = "" + typedNumber + " " + operatorSymbol;
     displayValue.innerText = "";
 }
 function isOperator(value) {
@@ -82,6 +83,7 @@ function isOperator(value) {
 }
 
 function operate(num1,sign,num2){
+    console.log("calculationArray: " + calculationArray);
     num1 = parseFloat(num1);
     num2 = parseFloat(num2);
 
@@ -114,3 +116,10 @@ function divide(a,b){
 function subtract(a,b){
     return a-b;
 }
+
+
+/* fix equals button
+    add clear button functionality
+    add delete button functionality
+    integrate decimal point
+*/
