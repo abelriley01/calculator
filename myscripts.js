@@ -13,24 +13,48 @@ numberButtons.forEach(button => {
   button.addEventListener("click", () => {
     const numberValue = button.innerText;
     if (!isOperator(numberValue)) {
-    currentNumber += value;
+    currentNumber += numberValue;
     updateDisplay(currentNumber);
     }
   });
+});
+
+operatorButtons.forEach(button =>{
+    button.addEventListener("click", () =>{
+        const operating = button.innerText;
+        if(operating === "÷"){
+            updateRunningCalculation("/", currentNumber)
+        }
+        if(operating === "x"){
+            updateRunningCalculation("*", currentNumber)
+        }
+        else{
+            updateRunningCalculation(operating, currentNumber)
+        }
+    });
+});
+
+calculate.addEventListener("click", () =>{
+   const calculationArray = runningDisplay.split(" ");
+   operate(calculationArray[0], calculationArray[1], calculationArray[2]);
 });
 
 function updateDisplay(value){
     displayValue.innerText = value;
 }
 
-function updateRunningCalculation(calc){
-    runningDisplay.innerText = calc;
+function updateRunningCalculation(calc, typedNumber){
+    runningDisplay += calc;
+    typedNumber.innerText = runningDisplay;
 }
 function isOperator(value) {
     return value === "+" || value === "-" || value === "*" || value === "/";
 }
 
 function operate(num1,sign,num2){
+    num1 = parseFloat(num1);
+    num2 = parseFloat(num2);
+
     if (sign === '+'){
         add(num1, num2);
     }
