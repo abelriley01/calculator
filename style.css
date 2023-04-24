@@ -21,11 +21,15 @@ button {
     height: 80px;
     width: 200px;
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
     align-items: flex-end;
     padding: 15px;
     border: solid black;
     margin: 10px;
     background-color: white; 
     color: black;
+}
+
+#currentNumber{
+margin-top: 50px;
 }
