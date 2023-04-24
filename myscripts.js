@@ -2,6 +2,7 @@ let firstNumber;
 let secondNumber;
 let operator;
 let currentNumber ="";
+let runningCalculation = "";
 let displayValue = document.getElementById("currentNumber");
 let runningDisplay = document.getElementById("runningDisplay");
 const numberButtons = document.querySelectorAll(".number-button");
@@ -41,13 +42,13 @@ calculate.addEventListener("click", () =>{
 });
 
 function calculateResult(){
-    const calculationArray = runningDisplay.split(" ");
+    const calculationArray = runningCalculation.split(" ");
     firstNumber = calculationArray[0];
     operator = calculationArray[1];
     secondNumber = calculationArray[2];
     const result =operate(firstNumber, operator, secondNumber);
     updateDisplay(result);
-    runningDisplay.innerText = "";
+    runningCalculation = "";
 }
 
 function updateDisplay(value){
@@ -55,7 +56,6 @@ function updateDisplay(value){
 }
 
 function updateRunningCalculation(calc, typedNumber){
-    console.log("runningDisplay: " + runningDisplay.innerText);
     let operatorSymbol;
 
     switch (calc) {
@@ -75,15 +75,14 @@ function updateRunningCalculation(calc, typedNumber){
         operatorSymbol = "";
         break;
     }
-    runningDisplay.innerText = "" + typedNumber + " " + operatorSymbol;
-    displayValue.innerText = "";
+    runningCalculation += typedNumber+ " " + operatorSymbol + " ";
+    runningDisplay.innerText = runningCalculation;
 }
 function isOperator(value) {
     return value === "+" || value === "-" || value === "*" || value === "/";
 }
 
 function operate(num1,sign,num2){
-    console.log("calculationArray: " + calculationArray);
     num1 = parseFloat(num1);
     num2 = parseFloat(num2);
 
