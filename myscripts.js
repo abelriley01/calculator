@@ -41,15 +41,26 @@ calculate.addEventListener("click", () =>{
     calculateResult();
 });
 
-function calculateResult(){
-    const calculationArray = runningCalculation.split(" ");
-    firstNumber = calculationArray[0];
-    operator = calculationArray[1];
-    secondNumber = calculationArray[2];
-    const result =operate(firstNumber, operator, secondNumber);
-    updateDisplay(result);
-    runningCalculation = "";
-}
+function calculateResult() {
+    runningCalculation += " " + currentNumber;
+    try {
+        console.log("runningCalculation: ", runningCalculation);
+      let [firstNum, operator, secondNum] = runningCalculation.split(" ");
+      console.log([firstNum, operator, secondNum]);
+      if(operator === "x"){
+        operator = "*"
+      }
+      else if(operator === "÷"){
+        operator = "/"
+      }
+      const result = operate(parseFloat(firstNum), operator, parseFloat(secondNum));
+      console.log(result);
+      updateDisplay(result);
+      runningCalculation = "";
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
 function updateDisplay(value){
     displayValue.innerText = value;
@@ -60,27 +71,27 @@ function updateRunningCalculation(calc, typedNumber){
 
     switch (calc) {
       case "+":
-        operatorSymbol = " + ";
+        operatorSymbol = "+";
         break;
       case "-":
-        operatorSymbol = " - ";
+        operatorSymbol = "-";
         break;
       case "*":
-        operatorSymbol = " × ";
+        operatorSymbol = "×";
         break;
       case "/":
-        operatorSymbol = " ÷ ";
+        operatorSymbol = "÷";
         break;
       default:
         operatorSymbol = "";
         break;
     }
-    runningCalculation += typedNumber+ " " + operatorSymbol + " ";
+    runningCalculation += typedNumber+ " " + operatorSymbol;
     runningDisplay.innerText = runningCalculation;
 }
 function isOperator(value) {
     return value === "+" || value === "-" || value === "*" || value === "/";
-}
+}   
 
 function operate(num1,sign,num2){
     num1 = parseFloat(num1);
@@ -104,7 +115,7 @@ function add(a, b){
     return a + b;
 }
 
-function mutiply(a,b){
+function multiply(a,b){
     return a * b;
 }
 
