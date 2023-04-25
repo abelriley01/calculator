@@ -10,7 +10,6 @@ const operatorButtons = document.querySelectorAll(".operator-button");
 const calculate = document.querySelector("#equals");
 const deleting = document.querySelector("#delete");
 const clearButton = document.querySelector("#clear");
-const decimal = document.querySelector("#decimal");
 
 
 numberButtons.forEach(button => {
@@ -45,6 +44,10 @@ operatorButtons.forEach(button =>{
 
 clearButton.addEventListener("click", () =>{
     clearAll();
+});
+
+deleting.addEventListener("click", () =>{
+    deleteValue();
 });
 
 calculate.addEventListener("click", () =>{
@@ -150,3 +153,6 @@ function clearAll(){
 function deleteValue(){
     displayValue.innerText = string(displayValue.innerText).slice(0,-1);
 }
+
+
+//add the final number to the running display
