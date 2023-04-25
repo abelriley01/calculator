@@ -8,12 +8,18 @@ let runningDisplay = document.getElementById("runningDisplay");
 const numberButtons = document.querySelectorAll(".number-button");
 const operatorButtons = document.querySelectorAll(".operator-button");
 const calculate = document.querySelector("#equals");
+const deleting = document.querySelector("#delete");
+const clearButton = document.querySelector("#clear");
+const decimal = document.querySelector("#decimal");
 
 
 numberButtons.forEach(button => {
   button.addEventListener("click", () => {
     const numberValue = button.innerText;
     if (!isOperator(numberValue)) {
+        if (numberValue === "." && currentNumber.includes(".")) {
+            return;
+          }
     currentNumber += numberValue;
     updateDisplay(currentNumber);
     }
@@ -35,6 +41,10 @@ operatorButtons.forEach(button =>{
         updateRunningCalculation(operator, currentNumber);
         currentNumber = "";
     });
+});
+
+clearButton.addEventListener("click", () =>{
+    clearAll();
 });
 
 calculate.addEventListener("click", () =>{
@@ -127,9 +137,16 @@ function subtract(a,b){
     return a-b;
 }
 
+function clearAll(){
+    displayValue.innerText = "";
+    runningDisplay.innerText = "";
+    firstNumber = undefined;
+    secondNumber = undefined;
+    operator = undefined;
+    currentNumber = "";
+    runningCalculation = "";
+}
 
-/* fix equals button
-    add clear button functionality
-    add delete button functionality
-    integrate decimal point
-*/
+function deleteValue(){
+    displayValue.innerText = string(displayValue.innerText).slice(0,-1);
+}
