@@ -151,7 +151,7 @@ function clearAll(){
 }
 
 function deleteValue(){
-    displayValue.innerText = string(displayValue.innerText).slice(0,-1);
+    displayValue.innerText = String(displayValue.innerText).slice(0,-1);
 }
 
 
