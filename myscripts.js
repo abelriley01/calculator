@@ -60,11 +60,12 @@ function calculateResult() {
       }
       else if(operator === "÷"){
         if (secondNum === "0"){
-            updateDisplay("You knew that wouldn't work, why did you try?");
+            updateDisplay("Don't get cute with me");
             return;
         }
         operator = "/"
       }
+
       const result = operate(parseFloat(firstNum), operator, parseFloat(secondNum));
       console.log(result);
       updateDisplay(result);
