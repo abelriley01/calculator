@@ -56,6 +56,7 @@ calculate.addEventListener("click", () =>{
 
 function calculateResult() {
     runningCalculation += " " + currentNumber;
+    runningDisplay.innerText += " " + currentNumber;
     try {
         console.log("runningCalculation: ", runningCalculation);
       let [firstNum, operator, secondNum] = runningCalculation.split(" ");
