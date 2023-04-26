@@ -1,4 +1,4 @@
-button {
+button, button#equals {
     background-color: #04AA6D;
     border: none;
     color: white;
@@ -11,6 +11,7 @@ button {
     font-size: 16px;
     margin: 3px;
     border-radius: 4px;
+    height: 80px;
 }
 
 #currentNumber{
@@ -27,7 +28,6 @@ button {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(5, 1fr);
-    grid-gap: 5px;
     border-radius: 5px;
     
 }
