@@ -61,6 +61,9 @@ function calculateResult() {
       else if(operator === "÷"){
         operator = "/"
       }
+      else if(operator === "/" && secondNum === "0"){
+        updateDisplay("You knew that wouldn't work, why did you try?")
+      }
       const result = operate(parseFloat(firstNum), operator, parseFloat(secondNum));
       console.log(result);
       updateDisplay(result);
