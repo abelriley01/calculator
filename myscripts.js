@@ -65,7 +65,9 @@ function calculateResult() {
         }
         operator = "/"
       }
-
+      else if(operator === "/" && secondNum === "0"){
+        updateDisplay("Don't get cute with me")
+      }
       const result = operate(parseFloat(firstNum), operator, parseFloat(secondNum));
       console.log(result);
       updateDisplay(result);
@@ -163,7 +165,14 @@ function deleteValue(){
 function addOperatorToCalculation(operator) {
     if (runningCalculation === "") {
       runningCalculation = currentNumber + " " + operator;
-    } else {
+    }
+
+    else if (/\+|\-|\*|\//.test(runningCalculation)){
+        const [firstNum, op, secondNum] = runningCalculation.split(" ");
+        const result = operate(parseFloat(firstNum), op, parseFloat(secondNum));
+        runningCalculation = result.toString() + " " + operator;
+    } 
+    else {
       runningCalculation += currentNumber + " " + operator;
       const [firstNum, op, secondNum] = runningCalculation.split(" ");
       const result = operate(parseFloat(firstNum), op, parseFloat(secondNum));
