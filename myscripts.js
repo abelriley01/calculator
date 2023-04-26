@@ -8,7 +8,7 @@ let runningDisplay = document.getElementById("runningDisplay");
 const numberButtons = document.querySelectorAll(".number-button");
 const operatorButtons = document.querySelectorAll(".operator-button");
 const calculate = document.querySelector("#equals");
-const deleting = document.querySelector("#delete");
+const deleteButton = document.querySelector("#delete");
 const clearButton = document.querySelector("#clear");
 
 
@@ -19,6 +19,10 @@ numberButtons.forEach(button => {
         if (numberValue === "." && currentNumber.includes(".")) {
             return;
           }
+          if (runningCalculation === "") {
+            startNewCalculation(numberValue);
+            return;
+          }
     currentNumber += numberValue;
     updateDisplay(currentNumber);
     }
@@ -27,26 +31,16 @@ numberButtons.forEach(button => {
 
 operatorButtons.forEach(button =>{
     button.addEventListener("click", () =>{
-        const operating = button.innerText;
-        if(operating === "÷"){
-            operator = "/"
-        }
-        else if(operating === "x"){
-            operator = "*"
-        }
-        else{
-            operator = operating
-        }
-        updateRunningCalculation(operator, currentNumber);
-        currentNumber = "";
+        const operator = button.innerText;
+        addOperatorToCalculation(operator);
+      });
     });
-});
 
 clearButton.addEventListener("click", () =>{
     clearAll();
 });
 
-deleting.addEventListener("click", () =>{
+deleteButton.addEventListener("click", () =>{
     deleteValue();
 });
 
@@ -70,6 +64,7 @@ function calculateResult() {
       const result = operate(parseFloat(firstNum), operator, parseFloat(secondNum));
       console.log(result);
       updateDisplay(result);
+      currentNumber = result.toString();
       runningCalculation = "";
     } catch (error) {
       console.error(error);
@@ -124,6 +119,11 @@ function operate(num1,sign,num2){
         return multiply(num1, num2);
     }
 }
+function startNewCalculation(numberValue) {
+    clearAll();
+    currentNumber = numberValue;
+    updateDisplay(currentNumber);
+  }
 
 function add(a, b){
     return a + b;
@@ -155,5 +155,17 @@ function deleteValue(){
     displayValue.innerText = String(displayValue.innerText).slice(0,-1);
 }
 
-
-//add the final number to the running display
+function addOperatorToCalculation(operator) {
+    if (runningCalculation === "") {
+      runningCalculation = currentNumber + " " + operator;
+    } else {
+      runningCalculation += currentNumber + " " + operator;
+      const [firstNum, op, secondNum] = runningCalculation.split(" ");
+      const result = operate(parseFloat(firstNum), op, parseFloat(secondNum));
+      updateDisplay(result);
+      currentNumber = result.toString();
+      runningCalculation = "";
+    }
+    runningDisplay.innerText = runningCalculation;
+    currentNumber = "";
+  }
