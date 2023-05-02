@@ -11,16 +11,28 @@ const calculate = document.querySelector("#equals");
 const deleteButton = document.querySelector("#delete");
 const clearButton = document.querySelector("#clear");
 
+document.addEventListener("keydown", (event) => {
+  const key = event.key;
+  if (key >= 0 && key <= 9) {
+    startNewCalculation(key);
+  } else if (key === ".") {
+    startNewCalculation(".");
+  } else if (key === "+" || key === "-" || key === "*" || key === "/") {
+    addOperatorToCalculation(key);
+  } else if (key === "Enter") {
+    calculateResult();
+  } else if (key === "Backspace") {
+    deleteValue();
+  } else if (key === "Escape") {
+    clearAll();
+  }
+});
 
 numberButtons.forEach(button => {
   button.addEventListener("click", () => {
     const numberValue = button.innerText;
     if (!isOperator(numberValue)) {
         if (numberValue === "." && currentNumber.includes(".")) {
-            return;
-          }
-          if (runningCalculation === "") {
-            startNewCalculation(numberValue);
             return;
           }
     currentNumber += numberValue;
@@ -45,10 +57,12 @@ calculate.addEventListener("click", calculateResult);
 function calculateResult() {
     runningCalculation += " " + currentNumber;
     runningDisplay.innerText += " " + currentNumber;
-    try {
         console.log("runningCalculation: ", runningCalculation);
       let [firstNum, operator, secondNum] = runningCalculation.split(" ");
       console.log([firstNum, operator, secondNum]);
+      if(firstNum === "" || operator === "" || secondNum === ""){
+        updateDisplay("Something went wrong")
+      }
       if(operator === "x"){
         operator = "*"
       }
@@ -61,13 +75,12 @@ function calculateResult() {
       }
       const result = operate(parseFloat(firstNum), operator, parseFloat(secondNum));
       console.log(result);
-      updateDisplay(result);
+      updateDisplay(parseFloat(result.toFixed(8)));
       currentNumber = result.toString();
       runningCalculation = "";
-    } catch (error) {
-      console.error(error);
+      currentNumber = "";
     }
-  }
+
 
 function updateDisplay(value){
     displayValue.innerText = value;
@@ -120,7 +133,7 @@ function operate(num1,sign,num2){
 }
 function startNewCalculation(numberValue) {
     clearAll();
-    currentNumber = numberValue;
+    currentNumber += numberValue;
     updateDisplay(currentNumber);
   }
 
@@ -175,5 +188,4 @@ function addOperatorToCalculation(operator) {
     runningDisplay.innerText = runningCalculation;
   }
 
-
-  //
+  // add functionality to give an operator the function of equals if there is already an operator
