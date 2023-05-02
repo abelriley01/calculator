@@ -57,11 +57,10 @@ calculate.addEventListener("click", calculateResult);
 function calculateResult() {
     runningCalculation += " " + currentNumber;
     runningDisplay.innerText += " " + currentNumber;
-        console.log("runningCalculation: ", runningCalculation);
       let [firstNum, operator, secondNum] = runningCalculation.split(" ");
-      console.log([firstNum, operator, secondNum]);
+      ([firstNum, operator, secondNum]);
       if(firstNum === "" || operator === "" || secondNum === ""){
-        updateDisplay("Something went wrong")
+        updateDisplay("That didn't work")
       }
       if(operator === "x"){
         operator = "*"
@@ -74,11 +73,8 @@ function calculateResult() {
         operator = "/"
       }
       const result = operate(parseFloat(firstNum), operator, parseFloat(secondNum));
-      console.log(result);
       updateDisplay(parseFloat(result.toFixed(8)));
       currentNumber = result.toString();
-      runningCalculation = "";
-      currentNumber = "";
     }
 
 
@@ -106,7 +102,6 @@ function updateRunningCalculation(calc, typedNumber){
         operatorSymbol = "";
         break;
     }
-    console.log(runningCalculation);
     runningCalculation += typedNumber+ " " + operatorSymbol;
     runningDisplay.innerText = runningCalculation;
 }
@@ -173,19 +168,21 @@ function addOperatorToCalculation(operator) {
       runningCalculation = currentNumber + " " + operator;
       currentNumber = "";
       displayValue.innerText = "";
+      runningDisplay.innerText = runningCalculation;
     }
-    else {
-      const [firstNum, op, secondNum] = runningCalculation.split(" ");
-      if (secondNum === undefined) {
-        runningCalculation = firstNum + " " + operator;
-      } else {
-        const result = operate(parseFloat(firstNum), op, parseFloat(secondNum));
-        runningCalculation = result + " " + operator;
-        updateDisplay(result);
+   else {
+    const [firstNum, op, secondNum] = runningCalculation.split(" ");
+    if (secondNum === undefined) {
+      if (currentNumber.length !== 0){
+        calculateResult();
+        runningCalculation = currentNumber + " " + operator;
+        runningDisplay.innerText = runningCalculation;
         currentNumber = "";
+        displayValue.innerText = "";
+        return;
       }
-    }
+      runningCalculation = firstNum + " " + operator;
+  }
     runningDisplay.innerText = runningCalculation;
   }
-
-  // add functionality to give an operator the function of equals if there is already an operator
+}
