@@ -159,8 +159,8 @@ function clearAll(){
 }
 
 function deleteValue(){
-    displayValue.innerText = String(displayValue.innerText).slice(0,-1);
-    currentNumber = String(currentNumber).slice(0,-1);
+    displayValue.innerText = ""
+    currentNumber = ""
 }
 
 function addOperatorToCalculation(operator) {
