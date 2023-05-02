@@ -3,6 +3,7 @@ let secondNumber;
 let operator;
 let currentNumber ="";
 let runningCalculation = "";
+let calculationHasRun = false;
 let displayValue = document.getElementById("currentNumber");
 let runningDisplay = document.getElementById("runningDisplay");
 const numberButtons = document.querySelectorAll(".number-button");
@@ -75,6 +76,7 @@ function calculateResult() {
       const result = operate(parseFloat(firstNum), operator, parseFloat(secondNum));
       updateDisplay(parseFloat(result.toFixed(8)));
       currentNumber = result.toString();
+      calculationHasRun = true;
     }
 
 
@@ -156,11 +158,21 @@ function clearAll(){
     operator = undefined;
     currentNumber = "";
     runningCalculation = "";
+    calculationHasRun = false;
 }
 
 function deleteValue(){
-    displayValue.innerText = ""
-    currentNumber = ""
+  if(calculationHasRun){
+    displayValue.innerText = "";
+    currentNumber = "";
+    runningCalculation = "";
+    runningDisplay.innertext = "";
+    calculationHasRun = false;
+  }
+  else{
+    displayValue.innerText = String(displayValue.innerText).slice(0,-1);
+    currentNumber = String(currentNumber).slice(0,-1);
+  }
 }
 
 function addOperatorToCalculation(operator) {
