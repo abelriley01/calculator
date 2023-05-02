@@ -176,6 +176,11 @@ function deleteValue(){
 }
 
 function addOperatorToCalculation(operator) {
+    if (calculationHasRun){
+    calculationHasRun = false;
+    runningCalculation = currentNumber + " " + operator;
+    runningDisplay.innerText = runningCalculation;
+    }
     if (runningCalculation === "") {
       runningCalculation = currentNumber + " " + operator;
       currentNumber = "";
