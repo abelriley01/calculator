@@ -12,23 +12,6 @@ const calculate = document.querySelector("#equals");
 const deleteButton = document.querySelector("#delete");
 const clearButton = document.querySelector("#clear");
 
-document.addEventListener("keydown", (event) => {
-  const key = event.key;
-  if (key >= 0 && key <= 9) {
-    startNewCalculation(key);
-  } else if (key === ".") {
-    startNewCalculation(".");
-  } else if (key === "+" || key === "-" || key === "*" || key === "/") {
-    addOperatorToCalculation(key);
-  } else if (key === "Enter") {
-    calculateResult();
-  } else if (key === "Backspace") {
-    deleteValue();
-  } else if (key === "Escape") {
-    clearAll();
-  }
-});
-
 numberButtons.forEach(button => {
   button.addEventListener("click", () => {
     const numberValue = button.innerText;
