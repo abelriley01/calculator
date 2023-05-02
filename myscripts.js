@@ -36,17 +36,11 @@ operatorButtons.forEach(button =>{
       });
     });
 
-clearButton.addEventListener("click", () =>{
-    clearAll();
-});
+clearButton.addEventListener("click",clearAll);
 
-deleteButton.addEventListener("click", () =>{
-    deleteValue();
-});
+deleteButton.addEventListener("click", deleteValue);
 
-calculate.addEventListener("click", () =>{
-    calculateResult();
-});
+calculate.addEventListener("click", calculateResult);
 
 function calculateResult() {
     runningCalculation += " " + currentNumber;
@@ -64,9 +58,6 @@ function calculateResult() {
             return;
         }
         operator = "/"
-      }
-      else if(operator === "/" && secondNum === "0"){
-        updateDisplay("Don't get cute with me")
       }
       const result = operate(parseFloat(firstNum), operator, parseFloat(secondNum));
       console.log(result);
@@ -102,6 +93,7 @@ function updateRunningCalculation(calc, typedNumber){
         operatorSymbol = "";
         break;
     }
+    console.log(runningCalculation);
     runningCalculation += typedNumber+ " " + operatorSymbol;
     runningDisplay.innerText = runningCalculation;
 }
@@ -160,26 +152,28 @@ function clearAll(){
 
 function deleteValue(){
     displayValue.innerText = String(displayValue.innerText).slice(0,-1);
+    currentNumber = String(currentNumber).slice(0,-1);
 }
 
 function addOperatorToCalculation(operator) {
     if (runningCalculation === "") {
       runningCalculation = currentNumber + " " + operator;
+      currentNumber = "";
+      displayValue.innerText = "";
     }
-
-    else if (/\+|\-|\*|\//.test(runningCalculation)){
-        const [firstNum, op, secondNum] = runningCalculation.split(" ");
-        const result = operate(parseFloat(firstNum), op, parseFloat(secondNum));
-        runningCalculation = result.toString() + " " + operator;
-    } 
     else {
-      runningCalculation += currentNumber + " " + operator;
       const [firstNum, op, secondNum] = runningCalculation.split(" ");
-      const result = operate(parseFloat(firstNum), op, parseFloat(secondNum));
-      updateDisplay(result);
-      currentNumber = result.toString();
-      runningCalculation = "";
+      if (secondNum === undefined) {
+        runningCalculation = firstNum + " " + operator;
+      } else {
+        const result = operate(parseFloat(firstNum), op, parseFloat(secondNum));
+        runningCalculation = result + " " + operator;
+        updateDisplay(result);
+        currentNumber = "";
+      }
     }
     runningDisplay.innerText = runningCalculation;
-    currentNumber = "";
   }
+
+
+  //
